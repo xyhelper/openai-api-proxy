@@ -21,6 +21,8 @@ func main() {
 		c.Request.Header.Del("CF-Connecting-IP")
 		c.Request.Header.Del("X-Forwarded-For")
 		c.Request.Header.Del("X-Real-IP")
+		// 修改主机头
+		c.Request.Host = targetURL.Host
 	}
 
 	// 创建一个处理程序函数来代理所有请求
