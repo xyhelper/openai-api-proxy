@@ -29,4 +29,4 @@ EXPOSE 8080
 ENV GIN_MODE=release
 
 # 启动应用程序
-CMD ["main"]
+CMD ["/usr/local/bin/main"]
