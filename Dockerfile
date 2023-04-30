@@ -20,6 +20,7 @@ RUN go build -o main .
 FROM alpine:latest
 RUN apk --no-cache add ca-certificates
 COPY --from=0 /app/main /usr/local/bin/main
+RUN chmod +x /usr/local/bin/main
 
 # 暴露应用程序的默认端口
 EXPOSE 8080
