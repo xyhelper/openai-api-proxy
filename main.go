@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"net/http/httputil"
 	"net/url"
+	"os"
 
 	"github.com/gin-gonic/gin"
 )
@@ -12,8 +13,14 @@ func main() {
 	// 创建一个Gin实例
 	router := gin.Default()
 
+	URL := "https://api.openai.com"
+	// 从环境变量中获取URL
+	if os.Getenv("URL") != "" {
+		URL = os.Getenv("URL")
+	}
+
 	// 创建反向代理处理程序
-	targetURL, _ := url.Parse("https://api.openai.com")
+	targetURL, _ := url.Parse(URL)
 	proxy := httputil.NewSingleHostReverseProxy(targetURL)
 
 	// 创建一个中间件函数来删除标头
@@ -39,12 +46,13 @@ func main() {
 
 	// 添加/路由来显示欢迎消息
 	router.GET("/", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{"message": "Welcome to the OpenAI API proxy!"})
+		c.JSON(http.StatusOK, gin.H{"message": "Welcome to the OpenAI API proxy! Currently proxying requests to " + URL + "."})
 	})
 
 	// 添加/ping路由来检查服务状态
 	router.GET("/ping", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{"message": "pong"})
+		// 返回所有请求头
+		c.JSON(http.StatusOK, gin.H{"message": "pong", "headers": c.Request.Header})
 	})
 
 	// 启动服务器
