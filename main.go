@@ -28,6 +28,11 @@ func main() {
 		c.Request.Header.Del("CF-Connecting-IP")
 		c.Request.Header.Del("X-Forwarded-For")
 		c.Request.Header.Del("X-Real-IP")
+		c.Request.Header.Del("X-Envoy-External-Address")
+		c.Request.Header.Del("X-Forwarded-Host")
+		c.Request.Header.Del("X-Forwarded-Proto")
+		c.Request.Header.Del("X-Request-Id")
+		c.Request.Header.Del("Cf-Ray")
 		// 修改主机头
 		c.Request.Host = targetURL.Host
 	}
