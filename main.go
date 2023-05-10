@@ -31,8 +31,10 @@ func main() {
 		c.Request.Header.Del("X-Envoy-External-Address")
 		c.Request.Header.Del("X-Forwarded-Host")
 		c.Request.Header.Del("X-Forwarded-Proto")
-		c.Request.Header.Del("X-Request-Id")
 		c.Request.Header.Del("Cf-Ray")
+		c.Request.Header.Del("Cf-Visitor")
+		c.Request.Header.Del("Cf-Ipcountry")
+		c.Request.Header.Del("Cf-Request-Id")
 		// 修改主机头
 		c.Request.Host = targetURL.Host
 	}
